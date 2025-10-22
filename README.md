@@ -1,177 +1,151 @@
-# ros2-examples
+ROS 2 Examples 🚀
 
-Collection of examples about the main features and core subsystems of the [Robot Operating System 2](https://docs.ros.org/en/jazzy/index.html) robotics middleware, for tutorials or class materials.
+This repository represents more than just code — it’s my personal deep dive into the Robot Operating System 2 (ROS 2), exploring its core subsystems, tools, and philosophies that power the next generation of intelligent robots.
 
-## Table of contents
+I’m using this collection to understand, experiment, and build — from simple publishers and subscribers to image processing, navigation, and advanced ROS 2 design patterns.
 
-- [ros2-examples](#ros2-examples)
-  - [Table of contents](#table-of-contents)
-  - [Requirements](#requirements)
-  - [Usage guidelines](#usage-guidelines)
-    - [Docker containers](#docker-containers)
-  - [Code organization](#code-organization)
-    - [List of examples](#list-of-examples)
-  - [Additional resources](#additional-resources)
-    - [Useful references](#useful-references)
-  - [Feedback](#feedback)
-  - [License](#license)
-  - [Copyright](#copyright)
+🧭 Why This Project Matters to Me
 
-## Requirements
+Robotics is where code meets motion — where logic turns into life.
+Through ROS 2, I’m learning how distributed systems, real-time control, and autonomous behavior come together to make robots think and move.
 
-- **Git** (to clone this repository) (find a comprehensive tutorial from zero to hero [here](https://www.atlassian.com/git/tutorials/what-is-git))
-- **ROS 2 Jazzy Jalisco**
-- **GCC toolchain** (or any other C++ compiler that supports C++17)
-- **Python 3**
-- **CMake**
-- **Visual Studio Code** (optional, other IDEs should work but the repository is built around VS Code)
-- **Docker** (optional)
+Each example here is more than a tutorial — it’s a small step toward my dream of building intelligent systems that can see, decide, and act in the real world.
 
-To clone this repository once you have Git installed, either use a GUI client or (better) run the following command in a terminal:
+⚙️ Requirements
 
-```bash
-git clone https://github.com/IntelligentSystemsLabUTV/ros2-examples.git
-```
+Git – for version control and collaboration
 
-and the repository will be cloned in the current directory, in a new directory called `ros2-examples`.
+ROS 2 Jazzy Jalisco – the backbone of all examples
 
-To update the repository's contents, make sure to be in the `jazzy` branch (rember: `git checkout` enables you to switch branches) and run:
+GCC / C++17 compiler or any modern toolchain
 
-```bash
+Python 3 – for scripting and node development
+
+CMake – to build projects cleanly
+
+VS Code (recommended) – my preferred IDE setup
+
+Docker (optional) – for isolated, reproducible builds
+
+Clone the repository:
+
+git clone  https://github.com/Keerthivarman-S-D/IOT_ROS2.git
+
+
+To update later:
+
+git checkout jazzy
 git pull
-```
 
-The contents of this repository were tested on a system running **Ubuntu Linux 24.04**, which is the officially supported host OS. You may as well be able to install ROS 2 on Windows and macOS, and thus run the examples on those platforms, but this is not guaranteed. Support for Windows is encouraged by means of the [Windows Subsystem for Linux 2](https://docs.microsoft.com/en-us/windows/wsl/install-win10) (WSL 2), which allows you to run a Linux kernel on Windows hosts; the `Ubuntu 24.04.1 LTS` distribution would be the best choice.
+🐳 Docker Containers
 
-The repository is built around a Visual Studio Code template that you can find [here](https://github.com/robmasocco/vscode_ros2_workspace), which automates many tasks that concern ROS 2 workspace organization and maintenance. It's suggested that you play with this repository inside VS Code.
+I’m fascinated by how ROS 2 integrates with Docker — this repo supports containers like:
 
-## Usage guidelines
+x86-dev
 
-If this is the first time you hear about ROS 2, go have a look at the [official documentation](https://docs.ros.org/en/jazzy/index.html) and some basic [tutorials](https://docs.ros.org/en/jazzy/Tutorials.html) before proceeding. It is also recommended to have a look at the [installation guide](https://docs.ros.org/en/jazzy/Installation.html) to get a grasp of the basic concepts and terminology.
+x86-cudev
 
-The file [`bin/ros2_jazzy_install.sh`](bin/ros2_jazzy_install.sh) contains a script that automates the installation of ROS 2 Jazzy Jalisco on Ubuntu Linux 24.04. It is not guaranteed to work on other platforms, but it should be easy to adapt it to other Debian-based distributions.
+armv8-dev
 
-The file [`config/ros2_cmds.sh`](config/ros2_cmds.sh) contains a list of useful CLI commands to source the ROS 2 installation and its autocompletion scripts, which you can copy and paste in your `.bashrc` file to have them available in your shell; alternatively, you can `source` that file.
+These help me build and test code across architectures without installing ROS 2 directly. It’s an elegant approach to scalable robotics development.
 
-At this point, you should be able to build, run and modify all of the examples in this repository. **It is strongly suggested that you create your own branch and work on that**, so that you can always pull the latest updates from the `jazzy` branch without losing your work.
+🧩 Code Organization
 
-The following sections will provide a brief overview of the repository's structure and contents.
+The repository is organized with clarity and purpose:
 
-### Docker containers
+src/
+ ├── cpp/           → C++ examples  
+ │   ├── advanced/  → multithreading, plugins, namespaces  
+ ├── python/        → Python examples  
+ │   ├── advanced/  → deeper-level ROS 2 internals  
+ └── ros2_examples_interfaces/  → shared message definitions
 
-This repository is based on the [`Distributed Unified Architecture`](https://github.com/dotX-Automation/dua-template), which provides support for Docker containers, so that you can run the examples without having to install ROS 2 on your host machine, and more. If you are interested, please find more information in the [`dua_template.md`](dua-template.md) file.
 
-According to the DUA target architecture, this repository offers the following containers:
+Every file is well-commented — //! in C++ and #! in Python explain the why behind the code, not just the what.
 
-- `x86-dev`
-- `x86-cudev`
-- `armv8-dev`
+💡 Key Example Packages
+🧩 Core
 
-which are intended to provide a development environment on all major platforms, with all the limitations that come with each. In case you want to run code from this repository on a different machine using DUA containers, you can use the DUA configuration scripts to add targets as explained in the [`dua_template.md`](dua_template.md) file.
+ros2_examples_interfaces – interface-only package
 
-## Code organization
+ros2_examples_bringup – conventions and launch file design
 
-The format is simple: all the code is thoroughly documented, and comments marked with an exclamation mark are meant to explain what is happening in detail.
+⚙️ C++ Examples
 
-In C++ source files, you may find:
+topic_pubsub_cpp – publishers & subscribers
 
-```c++
-// This is a comment.
-//! This is a comment that explains what is happening in detail.
-```
+custom_topic_cpp – custom message types and QoS
 
-whereas in Python code:
+simple_service_cpp – client/server basics
 
-```python
-# This is a comment.
-#! This is a comment that explains what is happening in detail.
-```
+parameters_example_cpp – handling node parameters
 
-Examples are provided for both C++ and Python, although the main focus of this project is on the former.
+actions_example_cpp – computing Fibonacci with actions
 
-Expect this repository to be updated frequently, as it is meant to be a work in progress.
+plugins_demo – implementing and using pluginlib in ROS 2
 
-All source code is found in the `src` directory, which is organized as follows:
+🔬 Advanced
 
-- `cpp` contains all the C++ code;
-- `python` contains all the Python code;
-- non-language-specific packages are found in the root `src` directory;
-- the `cpp/advanced` and `python/advanced` directories contain examples that are more complex and are aimed at achieving a deeper understanding of ROS 2 by discussing some of its more advanced features.
+namespaces_examples – remapping and namespaces
 
-### List of examples
+smp_example – multithreaded ROS 2 applications
 
-The following is a list of all the examples that are currently available in this repository.
+complete_actions_cpp – realistic action handling with executors
 
-**Please note that since this is a work in progress, some packages listed here may not be available yet, being still under development. They will be automatically ignored by `colcon` to avoid issues. Similarly, this list may not include packages that are not ready yet.**
+🎥 Image Processing
 
-- **Configuration packages**
-  - **ros2_examples_interfaces:** Example of an interfaces-only package (see [`interfaces.md`](interfaces.md)).
-  - **ros2_examples_bringup:** This package shows some conventions and best practices about launch files (see [`launch_files.md`](launch_files.md)).
+ros2_usb_camera – image publishing via image_transport
 
-- **C++ examples**
-  - **topic_pubsub_cpp:** Examples about topics and messages:
-    - `pub` and `sub` show how a node can subscribe or publish to a topic;
-    - `periodic_sub` shows how to dynamically deactivate and reactivate topic subscriptions.
-  - **custom_topic_cpp:** Similar to the above's `pub` and `sub`, the only difference is that they now use custom interfaces for messages defined in `ros2_examples_interfaces` and a 'best effort' QoS policy.
-  - **simple_service_cpp:** Classic ROS 2 client/server example.
-  - **parameters_example_cpp:** This example offers an in-depth coverage of node parameters.
-  - **actions_example_cpp:** This package shows how ROS 2 actions can be implemented, providing two example `client` and `server` nodes that compute the Fibonacci sequence.
-  - **plugins_demo:** The three packages inside that directory form a variation of the official example about plugins and `pluginlib` (see the reference below), with the main differences being that:
-    - optimal dynamic shared objects generation is enforced through the use of CMake target properties and GCC visibility macros;
-    - the set of packages reflects what could happen in a common use-case scenario, where a ROS 2 plugin enables the developer to define different implementations of a same object or algorithm, or simply separate the implementation from the code that actually uses it; in particular:
-      - **polygon_base** contains only headers that define a base class, so a common interface to all plugins that application code should use;
-      - **polygons** uses those headers to create two shared libraries, which represent two different implementations of a same object, and registers them with `pluginlib`;
-      - **polygons_tester** is an example of a package that uses plugins, including base class headers and loading specialized shared libraries through `pluginlib`.
-  - **Advanced examples**
-    - **namespaces_examples:** This package contains some examples to show what remapping rules are and which features they offer.
-    - **ros2_examples_headers:** Example of an headers-only package, to provide to other packages in the same workspace, that will depend on this.
-    - **smp_example:** This example shows what must be done in order to write a multithreaded ROS 2 application.
-    - **complete_actions_cpp:** This package adds to the nodes developed in the actions_example_cpp package some functionalities that make full use of the ROS 2 action features in realistic contexts, such as the deferred goal transition from the `ACCEPT` to the `EXECUTING` state, and the use of multithreaded executors.
-  - **Image processing**
-    - **ros2_usb_camera**: This package shows how to use the `image_transport` package to publish images from a USB camera.
-    - **aruco_detector**: This package shows how to use the `image_transport` package to subscribe to images, detect ArUco markers in them, and publish the result of a post-processing step displaying the result of the detection.
-    - **rqt_image_view**: This package shows how to use the `image_transport` package to subscribe to images and display them in a GUI.
+aruco_detector – detect and process ArUco markers
 
-- **Python examples**
+rqt_image_view – GUI visualization for image topics
 
-## Additional resources
+🐍 Python
 
-Find more information about specific topics in the following files:
+Equivalent publisher/subscriber and service examples for those who love simplicity and flexibility.
 
-- [**`interfaces.md`**](interfaces.md)**:** Describes best practices and conventions about interface files and packages.
-- [**`launch_files.md`**](launch_files.md)**:** Describes best practices and convetions about launch files and bringup packages.
-- [**`ros2_cli_cheat_sheet.pdf`**](ros2_cli_cheat_sheet.pdf)**:** Quick summary of all CLI introspection tools commands available in ROS 2.
-- [**`vscode_cheat_sheet_linux.pdf`**](vscode_cheat_sheet_linux.pdf)**:** Quick summary of useful Visual Studio Code keyboard commands on Linux.
+📘 Additional Resources
 
-### Useful references
+This repo is a goldmine for learning references:
 
-Some useful references about ROS 2 features:
+interfaces.md – best practices for interface packages
 
-- [**ROS/Patterns/Conventions**](http://wiki.ros.org/ROS/Patterns/Conventions)**:** Naming and measurement units conventions to respect when developing ROS 2 applications (the article is about ROS but still meaningful).
-- [**`rqt_console`**](https://docs.ros.org/en/jazzy/Tutorials/Rqt-Console/Using-Rqt-Console.html)**:** GUI to view, filter, save and reload log messages from multiple nodes at the same time.
-- [**Creating and Using Plugins (C++)**](https://docs.ros.org/en/jazzy/Tutorials/Pluginlib.html)**:** Basic tutorial about ROS 2 plugins: shared libraries to implement a common interface for algorithms, subsystems, and more, to be dynamically loaded at runtime, avoiding the need to add header files to and link the application against the specific, derived implementations.
-- [**Efficient intra-process communication**](https://docs.ros.org/en/jazzy/Tutorials/Intra-Process-Communication.html)**:** Notes about how intra-process communication can be enforced in compliant situations (design document available [here](https://design.ros2.org/articles/intraprocess_communications.html)). Note that this works at the middleware level: ROS 2 messages are passed between entities instead of being handed over to the DDS, but the latter would still bypass the network stack when implementing shared memory transport by default (*e.g.*, eProsima's FastDDS, which is the default RMW implementation in Humble).
-- [**Monitoring for parameter changes (C++)**](https://docs.ros.org/en/jazzy/Tutorials/Monitoring-For-Parameter-Changes-CPP.html)**:** Tutorial about the `ParameterEventHandler` class, to monitor and respond to parameter changes taking place in all nodes.
-- [**The `ROS_DOMAIN_ID` environment variable**](https://docs.ros.org/en/jazzy/Concepts/About-Domain-ID.html)**:** What it is and what it is useful for.
-- [**Recording and playing back data**](https://docs.ros.org/en/jazzy/Tutorials/Ros2bag/Recording-And-Playing-Back-Data.html)**:** How ROS 2 bags work and how they could be useful to log data. It is also possible to record them from an appropriate node, like [here](https://docs.ros.org/en/jazzy/Tutorials/Ros2bag/Recording-A-Bag-From-Your-Own-Node-Cpp.html).
-- [**About composition**](https://docs.ros.org/en/jazzy/Concepts/About-Composition.html)**:** Introduction to the components distributed paradigm.
-- [**Composing multiple nodes in a single process**](https://docs.ros.org/en/jazzy/Tutorials/Composition.html)**:** Introduction to the components introspection tools and different loading methods, with links to some source code examples.
-- [**Managed nodes**](https://design.ros2.org/articles/node_lifecycle.html)**:** Design document about nodes with lifecycle.
-- [**Lifecycle**](https://github.com/ros2/demos/blob/jazzy/lifecycle/README.rst)**:** Quick example that shows how nodes with lifecycle can be created and managed.
-- [**`image_transport`**](http://wiki.ros.org/image_transport)**:** Useful package that optimizes middleware communications when handling images, which would easily cause streams of large packets to occur (linked docs are still about ROS, but the interface is almost the same in ROS 2).
-- [**`image_pipeline`**](http://wiki.ros.org/image_pipeline)**:** Useful package to perform basic tasks on images (linked docs are still about ROS, but the interface is almost the same in ROS 2).
-- [**`message_filters`**](http://wiki.ros.org/message_filters)**:** A message filter is defined as something which a message arrives into and may or may not be spit back out of at a later point in time; this package is a collection of algorithms fully integrated in the middleware that solve common synchronization issues involving multiple different topics (linked docs are still about ROS, but the interface is almost the same in ROS 2) (suggested read: the [`ApproximateTime`](http://wiki.ros.org/message_filters/ApproximateTime) adaptive algorithm).
+launch_files.md – clean and modular launch configurations
 
-## Feedback
+ros2_cli_cheat_sheet.pdf – all the CLI tools at your fingertips
 
-If you have any questions or suggestions, please open an issue or contact us here on GitHub.
+vscode_cheat_sheet_linux.pdf – productivity shortcuts
 
----
+🔗 Useful References
 
-## License
+These guides inspired me to go beyond just running code:
 
-This work is licensed under the Apache 2.0 License. See the [`LICENSE`](LICENSE) file for details.
+ROS 2 naming conventions and design patterns
 
-## Copyright
+Plugin tutorials for modular software design
 
-Copyright (c) 2024, Intelligent Systems Lab, University of Rome Tor Vergata
+Parameter event handlers & lifecycle nodes
+
+Efficient intra-process communication
+
+ROS bags for data recording and playback
+
+image_transport and message_filters for high-performance vision
+
+🤝 Feedback & Contributions
+
+If you have feedback, ideas, or improvements — open an issue or PR!
+Collaboration is at the heart of robotics, and every contribution pushes the boundaries of what we can learn and build together.
+
+🧡 My Vision
+
+This isn’t just a collection of exercises — it’s a reflection of my journey in robotics.
+Every launch file, every node, every simulation is a lesson in patience, precision, and problem-solving.
+
+I believe the future belongs to those who can teach machines to perceive and move — and this repository is one of my first steps toward that vision.
+
+🪪 License
+
+Licensed under the Apache 2.0 License.
+© 2024 Intelligent Systems Lab, University of Rome Tor Vergata.
+Personal exploration and modifications by Keerthivarman.
